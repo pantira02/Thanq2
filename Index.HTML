@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>จองคิวแทนคุณ - ThanQ</title>
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+      background: #f0f8ff;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      color: #0044cc;
+      text-align: center;
+    }
+    form {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      margin-top: 2rem;
+      width: 100%;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .success {
+      text-align: center;
+      color: green;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>จองคิวแทนคุณ</h1>
+
+  <form id="bookingForm">
+    <label>ชื่อของคุณ:</label>
+    <input type="text" name="name" required>
+
+    <label>เบอร์โทรติดต่อ:</label>
+    <input type="tel" name="phone" required>
+
+    <label>บริการที่ต้องการ:</label>
+    <select name="service" required>
+      <option value="">-- เลือกบริการ --</option>
+      <option value="รับหิ้วสินค้า">รับหิ้วสินค้า</option>
+      <option value="ต่อแถวจองคิว">ต่อแถวจองคิว</option>
+      <option value="จองที่แฟนคลับ">จองที่แฟนคลับ</option>
+      <option value="จองโต๊ะร้านเหล้า">จองโต๊ะร้านเหล้า</option>
+      <option value="นั่งชิลล์เป็นเพื่อน">นั่งชิลล์เป็นเพื่อน</option>
+      <option value="เพื่อนคุยคลายเหงา">เพื่อนคุยคลายเหงา</option>
+    </select>
+
+    <label>วัน/เวลาที่ต้องการ:</label>
+    <input type="datetime-local" name="datetime" required>
+
+    <button type="submit">ส่งคำจอง</button>
+
+    <div class="success" id="successMsg" style="display:none;">✅ ส่งข้อมูลสำเร็จแล้ว!</div>
+  </form>
+
+  <script>
+    const form = document.getElementById('bookingForm');
+    const successMsg = document.getElementById('successMsg');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => (data[key] = value));
+
+      fetch("https://script.google.com/macros/s/AKfycbwj-7yeQr92gF45wabN7VP06EuGUY3Xn9LH8l1o9iHUchp6NW_ATq2ql4gudC4DtC9CQw/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      form.reset();
+      successMsg.style.display = "block";
+    });
+  </script>
+
+</body>
+</html>
